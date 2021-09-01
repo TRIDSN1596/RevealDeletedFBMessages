@@ -1,48 +1,48 @@
 // Lưu tất cả tin nhắn - có thể truy cập được từ console trong web facebook
-let rvdfm_all_msgs = [];
+let tridsn_all_msgs = [];
 
 // Hàm dùng để xóa hết tin nhắn đã lưu - có thể dùng từ console
-const rvdfm_clear = () => {
-  const count = rvdfm_all_msgs.length;
-  rvdfm_all_msgs.length = 0;
-  localStorage.removeItem("rvdfm_all_msgs");
+const tridsn_clear = () => {
+  const count = tridsn_all_msgs.length;
+  tridsn_all_msgs.length = 0;
+  localStorage.removeItem("tridsn_all_msgs");
 
-  console.log(`> ĐÃ XÓA ${count} TIN NHẮN ĐƯỢC LƯU BỞI RVDFM.`);
+  console.log(`> ĐÃ XÓA ${count} TIN NHẮN ĐƯỢC LƯU BỞI tridsn.`);
   rvdfmSendCounterToContentJs(count, 0);
 };
 
 // https://stackoverflow.com/a/25847017
-const rvdfmSendToBackgroundJs = (data) => {
-  var event = new CustomEvent("rvdfmPassToBackground", { detail: data });
+const tridsnSendToBackgroundJs = (data) => {
+  var event = new CustomEvent("tridsnPassToBackground", { detail: data });
   window.dispatchEvent(event);
 };
 
-const rvdfmSendCounterToContentJs = (count, newLength) => {
-  var event = new CustomEvent("rvdfmShowCounter", {
+const tridsnSendCounterToContentJs = (count, newLength) => {
+  var event = new CustomEvent("tridsnShowCounter", {
     detail: { count, newLength },
   });
   window.dispatchEvent(event);
 };
 
-const rvdfmSendDeletedMsgToContentJs = (msg) => {
-  var event = new CustomEvent("rvdfmDeletedMsg", {
+const tridsnSendDeletedMsgToContentJs = (msg) => {
+  var event = new CustomEvent("tridsnDeletedMsg", {
     detail: msg,
   });
   window.dispatchEvent(event);
 };
 
 (function () {
-  console.log("Extension RVDFM - Xem Tin Nhắn Bị Gỡ Trên FB đã BẬT");
+  console.log("Extension tridsn - Xem Tin Nhắn Bị Gỡ Trên FB đã BẬT");
 
-  rvdfm_all_msgs = JSON.parse(localStorage.rvdfm_all_msgs || "[]");
+  tridsn_all_msgs = JSON.parse(localStorage.tridsn_all_msgs || "[]");
   console.log(
-    `RVDFM Đã tải lên ${rvdfm_all_msgs.length} tin nhắn từ LocalStorage.`
+    `tridsn Đã tải lên ${tridsn_all_msgs.length} tin nhắn từ LocalStorage.`
   );
-  rvdfmSendCounterToContentJs(0, rvdfm_all_msgs.length);
+  tridsnSendCounterToContentJs(0, tridsn_all_msgs.length);
 
   // Lưu lại vào localStorage mỗi khi tắt tab
   window.addEventListener("beforeunload", () => {
-    localStorage.rvdfm_all_msgs = JSON.stringify(rvdfm_all_msgs);
+    localStorage.tridsn_all_msgs = JSON.stringify(tridsn_all_msgs);
   });
 
   //#region ============================ Những hàm hỗ trợ ============================
@@ -120,7 +120,7 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
         all_strings = all_strings.map((str) => parse(str));
 
         log.text(
-          "RVDFM - VÀO LÚC " + new Date().toLocaleString(),
+          "tridsn - VÀO LÚC " + new Date().toLocaleString(),
           "blue",
           "#fff9"
         );
@@ -201,7 +201,7 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
           if (str_i === "111" && isMsgIdStr(all_strings[i + 1])) {
             const id = all_strings[i + 1];
             const content =
-              rvdfm_all_msgs.find((c) => c.id === id)?.content || "";
+              tridsn_all_msgs.find((c) => c.id === id)?.content || "";
 
             chat.push({
               type: "Gỡ react",
@@ -250,7 +250,7 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
           if (str_i === "594" && isMsgIdStr(all_strings[i + 1])) {
             const id = all_strings[i + 1];
             const msgs =
-              rvdfm_all_msgs.filter(
+              tridsn_all_msgs.filter(
                 (c) => c.id === id && c.type !== "Thu hồi"
               ) || [];
 
@@ -264,11 +264,11 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
 
         console.log("Thông tin lọc được:", chat);
 
-        // Lưu vào rvdfm_all_msgs
-        const old_length = rvdfm_all_msgs.length;
+        // Lưu vào tridsn_all_msgs
+        const old_length = tridsn_all_msgs.length;
         for (let c of chat) {
           let isDuplicated = false;
-          for (let r of rvdfm_all_msgs) {
+          for (let r of tridsn_all_msgs) {
             if (JSON.stringify(c) === JSON.stringify(r)) {
               isDuplicated = true;
               break;
@@ -276,7 +276,7 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
           }
 
           if (!isDuplicated) {
-            rvdfm_all_msgs = rvdfm_all_msgs.concat(chat);
+            tridsn_all_msgs = tridsn_all_msgs.concat(chat);
 
             if (c.type === "Thu hồi" && chat.length === 1) {
               log.text(
@@ -285,7 +285,7 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
                 "#f35369"
               );
               console.log(
-                c.msg || "(RVDFM: không có dữ liệu cho tin nhắn này)"
+                c.msg || "(tridsn: không có dữ liệu cho tin nhắn này)"
               );
 
               rvdfmSendDeletedMsgToContentJs(c.msg);
@@ -294,12 +294,12 @@ const rvdfmSendDeletedMsgToContentJs = (msg) => {
         }
 
         // Hiển thị thông tin lưu tin nhắn mới
-        const new_lenght = rvdfm_all_msgs.length;
+        const new_lenght = tridsn_all_msgs.length;
         const new_msg_count = new_lenght - old_length;
         if (new_msg_count) {
-          rvdfmSendCounterToContentJs(new_msg_count, new_lenght);
+          tridsnSendCounterToContentJs(new_msg_count, new_lenght);
           log.text(
-            `> RVDFM Đã lưu ${new_msg_count} tin nhắn mới! (${new_lenght})`,
+            `> tridsn Đã lưu ${new_msg_count} tin nhắn mới! (${new_lenght})`,
             "green"
           );
         }
