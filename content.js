@@ -32,7 +32,7 @@ window.addEventListener(
 // https://dev.to/paulasantamaria/chrome-extensions-making-changes-to-a-web-page-1n5f
 // Notification body.
 const notification = document.createElement("div");
-notification.className = "rvdfm-notification";
+notification.className = "tridsn-notification";
 
 // Notification icon.
 const icon32 = document.createElement("img");
@@ -49,7 +49,7 @@ doc.appendChild(notification);
 // Show notification after 5 seconds
 setTimeout(() => {
   notificationText.innerHTML =
-    "RVDFM - Xem tin nhắn bị gỡ trên fb <b>ĐANG BẬT</b>";
+    "tridsn - Xem tin nhắn bị gỡ trên fb <b>ĐANG BẬT</b>";
   notification.style.bottom = "30px";
 
   setTimeout(function () {
@@ -59,7 +59,7 @@ setTimeout(() => {
 
 // =========================== Saved Messages Counter ===========================
 const savedCounter = document.createElement("div");
-savedCounter.className = "rvdfm-saved-counter";
+savedCounter.className = "tridsn-saved-counter";
 
 // Make the Counter element draggable:
 dragElement(savedCounter);
@@ -73,7 +73,7 @@ const container = document.createElement("div");
 
 // Counter text.
 const counterText = document.createElement("p");
-counterText.innerHTML = "RVDFM xin chào";
+counterText.innerHTML = "Tridsn xin chào";
 container.appendChild(counterText);
 
 // =================== Buttons =========================
@@ -82,16 +82,16 @@ const btnsContainer = document.createElement("div");
 
 const clearAllSavedMsg = document.createElement("button");
 clearAllSavedMsg.innerHTML = "Xóa tất cả";
-clearAllSavedMsg.title = "Xóa những tin nhắn đã lưu bởi RVDFM";
+clearAllSavedMsg.title = "Xóa những tin nhắn đã lưu bởi Ttridsn";
 clearAllSavedMsg.onclick = () => {
   alert(
     `Chức năng Xóa tất cả TIN NHẮN ĐÃ LƯU chưa hoàn thành!\nBạn vui lòng bấm F12 vào console gõ câu lệnh rvdfm_clear() và Enter để xóa nhé.`
   );
-  // BUG: không thể truy cập rvdfm_all_msgs hay localStorage.rvdfm_all_msgs ?????
-  // const count = JSON.parse(localStorage.rvdfm_all_msgs)?.length;
+  // BUG: không thể truy cập rvdfm_all_msgs hay localStorage.tridsn_all_msgs ?????
+  // const count = JSON.parse(localStorage.tridsn_all_msgs)?.length;
   // rvdfm_all_msgs = [];
-  // localStorage.removeItem("rvdfm_all_msgs");
-  // counterText.innerHTML = `Đã xóa ${count} tin nhắn khỏi bộ nhớ RVDFM.`;
+  // localStorage.removeItem("tridsn_all_msgs");
+  // counterText.innerHTML = `Đã xóa ${count} tin nhắn khỏi bộ nhớ tridsn.`;
 };
 btnsContainer.appendChild(clearAllSavedMsg);
 
@@ -99,7 +99,7 @@ btnsContainer.appendChild(clearAllSavedMsg);
 const showAllSavedMsgBtn = document.createElement("button");
 showAllSavedMsgBtn.className = "green";
 showAllSavedMsgBtn.innerHTML = "Xem tất cả";
-showAllSavedMsgBtn.title = "Xem tất cả tin nhắn được lưu bởi RVDFM";
+showAllSavedMsgBtn.title = "Xem tất cả tin nhắn được lưu bởi tridsn";
 showAllSavedMsgBtn.onclick = () => {
   alert(
     `Chức năng Xem tất cả TIN NHẮN ĐÃ LƯU chưa hoàn thành!\nBạn vui lòng bấm F12 vào console gõ câu lệnh rvdfm_all_msgs và Enter để xem nhé.`
@@ -138,13 +138,13 @@ window.addEventListener(
   function (evt) {
     const { count, newLength } = evt.detail;
     if (!count && !newLength) {
-      counterText.innerText = `RVDFM xin chào`;
+      counterText.innerText = `tridsn xin chào`;
     } else if (newLength) {
-      counterText.innerText = `RVDFM Đã lưu thêm được ${count} tin nhắn (${getNow()}). (tổng: ${newLength})`;
+      counterText.innerText = `tridsn Đã lưu thêm được ${count} tin nhắn (${getNow()}). (tổng: ${newLength})`;
       clearAllSavedMsg.style.display = "inline-block";
       showAllSavedMsgBtn.style.display = "inline-block";
     } else {
-      counterText.innerText = `Đã xóa ${count} tin nhắn khỏi bộ nhớ RVDFM`;
+      counterText.innerText = `Đã xóa ${count} tin nhắn khỏi bộ nhớ tridsn`;
       clearAllSavedMsg.style.display = "none";
       showAllSavedMsgBtn.style.display = "none";
     }
@@ -199,7 +199,7 @@ window.addEventListener(
           str += `<a href="${msg.content}" target="_blank">Mở trong tab mới</a> <br/>`;
           break;
         default:
-          str += "(RVDFM Không có dữ liệu cho tin nhắn này)";
+          str += "(tridsn Không có dữ liệu cho tin nhắn này)";
       }
 
       // append to firstc
