@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(function (data, sender, sendResponse) {
       case "deleted_unknow_msg":
       case "deleted_msg": {
         const rvdfm = JSON.parse(localStorage.rvdfm || "[]");
-        localStorage.rvdfm = JSON.stringify([...rvdfm, data]);
+        localStorage.tridsn = JSON.stringify([...rvdfm, data]);
 
         console.log(localStorage);
         break;
@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(function (data, sender, sendResponse) {
       case "new_msg_text":
       case "new_msg_media": {
         const msgs = JSON.parse(localStorage.rvdfmmsgs || "[]");
-        localStorage.rvdfmmsgs = JSON.stringify([...msgs, data]);
+        localStorage.tridsnmsgs = JSON.stringify([...msgs, data]);
         break;
       }
       default: {
