@@ -82,14 +82,14 @@ const btnsContainer = document.createElement("div");
 
 const clearAllSavedMsg = document.createElement("button");
 clearAllSavedMsg.innerHTML = "Xóa tất cả";
-clearAllSavedMsg.title = "Xóa những tin nhắn đã lưu bởi Ttridsn";
+clearAllSavedMsg.title = "Xóa những tin nhắn đã lưu bởi tridsn";
 clearAllSavedMsg.onclick = () => {
   alert(
     `Chức năng Xóa tất cả TIN NHẮN ĐÃ LƯU chưa hoàn thành!\nBạn vui lòng bấm F12 vào console gõ câu lệnh rvdfm_clear() và Enter để xóa nhé.`
   );
-  // BUG: không thể truy cập rvdfm_all_msgs hay localStorage.tridsn_all_msgs ?????
+  // BUG: không thể truy cập tridsn_all_msgs hay localStorage.tridsn_all_msgs ?????
   // const count = JSON.parse(localStorage.tridsn_all_msgs)?.length;
-  // rvdfm_all_msgs = [];
+  // tridsn_all_msgs = [];
   // localStorage.removeItem("tridsn_all_msgs");
   // counterText.innerHTML = `Đã xóa ${count} tin nhắn khỏi bộ nhớ tridsn.`;
 };
@@ -102,7 +102,7 @@ showAllSavedMsgBtn.innerHTML = "Xem tất cả";
 showAllSavedMsgBtn.title = "Xem tất cả tin nhắn được lưu bởi tridsn";
 showAllSavedMsgBtn.onclick = () => {
   alert(
-    `Chức năng Xem tất cả TIN NHẮN ĐÃ LƯU chưa hoàn thành!\nBạn vui lòng bấm F12 vào console gõ câu lệnh rvdfm_all_msgs và Enter để xem nhé.`
+    `Chức năng Xem tất cả TIN NHẮN ĐÃ LƯU chưa hoàn thành!\nBạn vui lòng bấm F12 vào console gõ câu lệnh tridsn_all_msgs và Enter để xem nhé.`
   );
 };
 btnsContainer.appendChild(showAllSavedMsgBtn);
@@ -134,7 +134,7 @@ const getNow = () => new Date().toLocaleTimeString();
 
 // Show counter
 window.addEventListener(
-  "rvdfmShowCounter",
+  "tridsnShowCounter",
   function (evt) {
     const { count, newLength } = evt.detail;
     if (!count && !newLength) {
@@ -154,7 +154,7 @@ window.addEventListener(
 
 // Show deleted msg
 window.addEventListener(
-  "rvdfmDeletedMsg",
+  "tridsnDeletedMsg",
   function (evt) {
     const msgs = evt.detail;
 
